@@ -24,13 +24,18 @@ namespace Fabriken1
                 Console.WriteLine("Your storage Contains:");
                 mysteryStorage.ShowStorage();
                 PrintSendingList();
-                Console.WriteLine("Pick the materials that you want to send to the Mystery Factory:\n(pick the number)");
+                Console.WriteLine("Pick the materials that you want to send to the Mystery Factory:\n(pick the number)\n Pick 0 To send to Factory:");
                 Console.WriteLine("");
 
                 int userChoiceInput = Int32.Parse(Console.ReadLine());
                 if (userChoiceInput == 0)
                 {
-                    mysteryStorage.AddProduct(mysteryFabrik.CreatProduct(sendToFabrik));
+                    var newProdukt = mysteryFabrik.CreatProduct(sendToFabrik);
+                    Console.WriteLine(newProdukt.Item1);
+                    Console.ReadLine();
+                    mysteryStorage.AddProduct(newProdukt.Item1);
+                    mysteryStorage.AddMaterials(newProdukt.Item2);
+                    sendToFabrik.Clear();
                 }
                 else
                 {

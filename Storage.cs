@@ -10,12 +10,19 @@ namespace Fabriken1
     {
         
         private List<string> _IsInStorage = new List<string>();
+        private List<string> _IsInStorageProducts = new List<string>();
+
         public void ShowStorage()
         {
             for (int i = 0; i < _IsInStorage.Count; i++)
             {
                 var rightCounter = i + 1;
                 Console.WriteLine($"{rightCounter}, {_IsInStorage[i]}");
+            }
+            Console.WriteLine("\n");
+            foreach (var item in _IsInStorageProducts)
+            {
+                Console.WriteLine($"{item}");
             }
         }
         public Storage(int numberOfMaterials)
@@ -35,11 +42,15 @@ namespace Fabriken1
             _IsInStorage.RemoveAt(userInput);
             return returnMaterial;
 
+
+        }
+        public void AddMaterials(List<string> leftOver)
+        {
+            _IsInStorage.AddRange(leftOver);
         }
         public void AddProduct(string produkt)
         {
-            _IsInStorage.Add(produkt);
-            _IsInStorage.Sort();
+            _IsInStorageProducts.Add(produkt);
         }
 
     }

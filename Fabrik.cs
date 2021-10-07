@@ -9,40 +9,91 @@ namespace Fabriken1
     public class Fabrik
     {
 
-        private List<List<string>> _bluePrints = new List<List<string>>();
+        private List<Products> _productsList = new List<Products>();
         public Fabrik()
         {
-            List<string> IronShit = new List<string>();
-            IronShit.Add("IronShit");
-            IronShit.Add(Matrial.Metal.ToString());
-            IronShit.Add(Matrial.Metal.ToString());
-            IronShit.Add(Matrial.Metal.ToString());
-            IronShit.Add(Matrial.Metal.ToString());
-            IronShit.Add(Matrial.Metal.ToString());
-            IronShit.Add(Matrial.Stone.ToString());
-            _bluePrints.Add(IronShit);
-            List<string> Car = new List<string>();
-            Car.Add("Car");
-            Car.Add(Matrial.Plastic.ToString());
-            
-            _bluePrints.Add(Car);
+            var swimingpool = new Products("Swimingpool",2,1,1,0);
+            var StoneTable = new Products("StoneTable", 0, 0, 2, 1);
+            var car = new Products("car", 2, 2, 0, 0);
+            var Computer = new Products("Computer", 3, 3, 0, 0);
+            _productsList.Add(car);
+            _productsList.Add(swimingpool);
+            _productsList.Add(StoneTable);
+            _productsList.Add(Computer);
         }
-        public string CreatProduct(List<string> userMaterials)
+        public (string, List<string>) CreatProduct(List<string> userMaterials)
         {
-            var produkt = "";
-            var produktComplexity = 0;
-                foreach (var list1 in _bluePrints)
+            List<string> returnedMaterials = new List<string>();
+            Console.WriteLine();
+            var theNewProduct = "";
+            var metalCount = 0;
+            var plasticCount = 0;
+            var treeCount = 0;
+            var stoneCount = 0;
+            var leftOver = 0;
+            int[] sendBackMetalPlasticTreeStone = new int[4];
+            int[] tempSendBackMetalPlasticTreeStone = new int[4];
+            foreach (var item in userMaterials)
+            {
+                switch (item)
                 {
-                    if (list1.Except(userMaterials).Any() == false)
+                    case "Metal":
+                        metalCount++;
+                        break;
+                    case "Plastic":
+                        plasticCount++;
+                        break;
+                    case "Tree":
+                        treeCount++;
+                        break;
+                    case "Stone":
+                        stoneCount++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            sendBackMetalPlasticTreeStone[0] = metalCount;
+            sendBackMetalPlasticTreeStone[1] = plasticCount;
+            sendBackMetalPlasticTreeStone[2] = treeCount;
+            sendBackMetalPlasticTreeStone[3] = stoneCount;
+
+            foreach (var item in _productsList)
+            {
+                var testet = item.ProductCost(plasticCount, metalCount, stoneCount, treeCount);
+                if (testet.Item2)
+                {
+                    if (leftOver < testet.Item1)
                     {
-                        if(list1.Count > produktComplexity)
-                        {
-                            produkt = list1[0];
-                            produktComplexity = list1.Count;
-                        }
+                        leftOver = testet.Item1;
+                        theNewProduct = item.Name;
+                        tempSendBackMetalPlasticTreeStone = item.ReturnCost();
                     }
                 }
-            return produkt;
+            }
+            for (int i = 0; i < sendBackMetalPlasticTreeStone.Length; i++)
+            {
+                sendBackMetalPlasticTreeStone[i] -= tempSendBackMetalPlasticTreeStone[i];
+            }
+            for (int i = 0; i < sendBackMetalPlasticTreeStone[0]; i++)
+            {
+                returnedMaterials.Add("Metal");
+            }
+            for (int i = 0; i < sendBackMetalPlasticTreeStone[1]; i++)
+            {
+                returnedMaterials.Add("Plastic");
+            }
+            for (int i = 0; i < sendBackMetalPlasticTreeStone[2]; i++)
+            {
+                returnedMaterials.Add("Tree");
+            }
+            for (int i = 0; i < sendBackMetalPlasticTreeStone[3]; i++)
+            {
+                returnedMaterials.Add("Stone");
+            }
+            return (theNewProduct, returnedMaterials);
+
         }
         private string ProductMatch(string Matrial)
         {
