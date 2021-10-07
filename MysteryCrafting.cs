@@ -10,10 +10,11 @@ namespace Fabriken1
     {
         public List<string> sendToFabrik = new List<string>();
         public Storage mysteryStorage;
+        public Fabrik mysteryFabrik;
         public MysteryCrafting(int storageSize)
         {
             mysteryStorage = new Storage(storageSize);
-            Fabrik mysteryFabrik = new Fabrik();
+            mysteryFabrik = new Fabrik();
         }
         public void UserInterface()
         {
@@ -23,9 +24,20 @@ namespace Fabriken1
                 Console.WriteLine("Your storage Contains:");
                 mysteryStorage.ShowStorage();
                 PrintSendingList();
-                System.Console.WriteLine("Pick the materials that you want to send to the Mystery Factory:(pick the number:");
-                int userChoiceInput = Int32.Parse(Console.ReadLine()) -1;
-                sendToFabrik.Add(mysteryStorage.SendedMaterial(userChoiceInput));
+                Console.WriteLine("Pick the materials that you want to send to the Mystery Factory:\n(pick the number)");
+                Console.WriteLine("");
+
+                int userChoiceInput = Int32.Parse(Console.ReadLine());
+                if (userChoiceInput == 0)
+                {
+                    mysteryStorage.AddProduct(mysteryFabrik.CreatProduct(sendToFabrik));
+                }
+                else
+                {
+                    sendToFabrik.Add(mysteryStorage.SendedMaterial(userChoiceInput-1));
+                }
+
+                
             }
         }
         public void PrintSendingList()

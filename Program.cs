@@ -6,7 +6,7 @@ namespace Fabriken1
     {
         static void Main(string[] args)
         {
-            MysteryCrafting newGame = new MysteryCrafting(15);           //Storage newStorage = new Storage(6);
+            MysteryCrafting newGame = new MysteryCrafting(20);           //Storage newStorage = new Storage(6);
             newGame.UserInterface();
             //newStorage.ShowStorage();
             //Fabrik newFabrik = new Fabrik();

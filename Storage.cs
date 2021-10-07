@@ -27,6 +27,7 @@ namespace Fabriken1
                 int index = random.Next(Enum.GetNames(typeof(Matrial)).Length);
                 _IsInStorage.Add(Enum.GetValues(slumpen.GetType()).GetValue(index).ToString());
             }
+            _IsInStorage.Sort();
         }
         public string SendedMaterial(int userInput)
         {
@@ -34,6 +35,11 @@ namespace Fabriken1
             _IsInStorage.RemoveAt(userInput);
             return returnMaterial;
 
+        }
+        public void AddProduct(string produkt)
+        {
+            _IsInStorage.Add(produkt);
+            _IsInStorage.Sort();
         }
 
     }

@@ -21,19 +21,28 @@ namespace Fabriken1
             IronShit.Add(Matrial.Metal.ToString());
             IronShit.Add(Matrial.Stone.ToString());
             _bluePrints.Add(IronShit);
+            List<string> Car = new List<string>();
+            Car.Add("Car");
+            Car.Add(Matrial.Plastic.ToString());
+            
+            _bluePrints.Add(Car);
         }
-        public void CreatProduct()
+        public string CreatProduct(List<string> userMaterials)
         {
-            foreach (var list1 in _bluePrints)
-            {
-               
-                foreach (var element in list1)
+            var produkt = "";
+            var produktComplexity = 0;
+                foreach (var list1 in _bluePrints)
                 {
-                    
-                    Console.WriteLine(element);
+                    if (list1.Except(userMaterials).Any() == false)
+                    {
+                        if(list1.Count > produktComplexity)
+                        {
+                            produkt = list1[0];
+                            produktComplexity = list1.Count;
+                        }
+                    }
                 }
-
-            }
+            return produkt;
         }
         private string ProductMatch(string Matrial)
         {
