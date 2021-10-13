@@ -8,7 +8,7 @@ namespace Fabriken1
 {
     public class Fabrik
     {
-
+        private Storage x;
         private List<Products> _productsList = new List<Products>();
         public Fabrik()
         {
@@ -53,12 +53,10 @@ namespace Fabriken1
                         break;
                 }
             }
-
             sendBackMetalPlasticTreeStone[0] = metalCount;
             sendBackMetalPlasticTreeStone[1] = plasticCount;
             sendBackMetalPlasticTreeStone[2] = treeCount;
             sendBackMetalPlasticTreeStone[3] = stoneCount;
-
             foreach (var item in _productsList)
             {
                 var testet = item.ProductCost(plasticCount, metalCount, stoneCount, treeCount);
@@ -93,7 +91,6 @@ namespace Fabriken1
                 returnedMaterials.Add("Stone");
             }
             return (theNewProduct, returnedMaterials);
-
         }
         private string ProductMatch(string Matrial)
         {
